@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+  }
+
+  ::selection {
+    background: #FACC15;
+    color: #000;
+  }
+}
+
+@layer components {
+  /* ── Full-screen diagonal hazard tape background ── */
+  .hazard-bg {
+    background-color: #000;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #FACC15,
+      #FACC15 28px,
+      #000000 28px,
+      #000000 66px
+    );
+    background-size: 160px 160px;
+    animation: tapeSlide 14s linear infinite;
+  }
+
+  /* Larger stripes on desktop */
+  @media (min-width: 768px) {
+    .hazard-bg {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #FACC15,
+        #FACC15 40px,
+        #000000 40px,
+        #000000 96px
+      );
+      background-size: 240px 240px;
+    }
+  }
+
+  /* ── Center glass card ── */
+  .glass-card {
+    @apply relative rounded-2xl overflow-hidden;
+    background: rgba(0, 0, 0, 0.82);
+    border: 2px solid rgba(250, 204, 21, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(250,204,21,0.1),
+      0 32px 80px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(250,204,21,0.08);
+    backdrop-filter: blur(16px);
+  }
+
+  /* ── CTA button — hazard gold ── */
+  .btn-hazard {
+    @apply inline-flex items-center justify-center gap-2 font-display font-bold
+           uppercase tracking-widest text-black bg-hazard rounded-xl
+           transition-all duration-150 select-none;
+    letter-spacing: 0.12em;
+  }
+  .btn-hazard:hover  { @apply brightness-110 scale-[1.03]; box-shadow: 0 0 24px rgba(250,204,21,0.5); }
+  .btn-hazard:active { @apply scale-[0.98]; }
+
+  /* ── Ghost button ── */
+  .btn-ghost-hazard {
+    @apply inline-flex items-center justify-center gap-2 font-display font-bold
+           uppercase tracking-widest text-hazard rounded-xl
+           border-2 border-hazard/50 bg-hazard/5 transition-all duration-150;
+    letter-spacing: 0.12em;
+  }
+  .btn-ghost-hazard:hover { @apply border-hazard bg-hazard/10 scale-[1.03]; }
+
+  /* ── Warning tape label strip ── */
+  .tape-label {
+    background: #FACC15;
+    color: #000;
+    @apply font-display font-bold uppercase tracking-[0.2em] text-black;
+  }
+
+  /* ── Input ── */
+  .hazard-input {
+    @apply w-full bg-white/5 border-2 border-white/20 rounded-xl px-4 py-3
+           text-white text-sm placeholder-white/30 outline-none
+           transition-all duration-200;
+  }
+  .hazard-input:focus {
+    @apply border-hazard/70 bg-hazard/5;
+    box-shadow: 0 0 0 3px rgba(250,204,21,0.12);
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #FACC15; border-radius: 3px; }
+}
+
+@layer utilities {
+  /* Blinking cursor */
+  .cursor-blink::after {
+    content: '▌';
+    @apply text-hazard animate-blink ml-0.5;
+  }
+
+  /* Tape text gradient */
+  .text-gradient-fire-ice {
+    background: linear-gradient(90deg, #DC2626 0%, #F59E0B 45%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Keyframes — defined here so Vite picks them up */
+@keyframes tapeSlide {
+  from { background-position: 0 0; }
+  to   { background-position: 160px 160px; }
+}
+
+@media (min-width: 768px) {
+  @keyframes tapeSlide {
+    from { background-position: 0 0; }
+    to   { background-position: 240px 240px; }
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

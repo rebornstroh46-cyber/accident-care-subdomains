@@ -1,0 +1,24 @@
+{
+  "name": "acc-subdomains",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:shop":   "vite --config vite.shop.js",
+    "dev:store":  "vite --config vite.store.js",
+    "build:shop":  "vite build --config vite.shop.js  && node scripts/post-build.mjs shop",
+    "build:store": "vite build --config vite.store.js && node scripts/post-build.mjs store",
+    "build": "npm run build:shop && npm run build:store"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.4.11"
+  }
+}
